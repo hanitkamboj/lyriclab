@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
+const isStaticExport = process.env.EXPORT_MODE === 'static';
+
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    unoptimized: isStaticExport,
     domains: ['firebasestorage.googleapis.com', 'lh3.googleusercontent.com', 'i.ytimg.com', 'images.pexels.com'],
   },
   env: {
@@ -14,14 +17,17 @@ const nextConfig = {
     NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: 'G-7VPTJCSHST',
     NEXT_PUBLIC_YOUTUBE_API_KEY: 'AIzaSyDbt70OPPr-teRTsPRf6lEsfRo6mOdSj-nU',
   },
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: `${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8000'}/api/:path*`,
-      },
-    ];
-  },
 };
+
+if (isStaticExport) {
+  nextConfig.output = 'export';
+} else {
+  nextConfig.rewrites = async () => [
+    {
+      source: '/api/:path*',
+      destination: `${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8000'}/api/:path*`,
+    },
+  ];
+}
 
 module.exports = nextConfig;

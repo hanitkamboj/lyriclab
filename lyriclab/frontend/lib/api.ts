@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8000';
+const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL ||
+  (typeof window !== 'undefined' && window.location.hostname === 'localhost' ? 'http://localhost:8000' :
+   'https://lyriclab-backend.onrender.com');
 
 const api = axios.create({
   baseURL: `${API_BASE}/api`,
