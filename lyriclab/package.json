@@ -1,0 +1,21 @@
+{
+  "name": "lyriclab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LyricLab - AI-Powered Lyrics Video Creator & Publisher",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && uvicorn app.main:app --reload --port 8000",
+    "build": "cd frontend && npm run build",
+    "start": "cd frontend && npm start",
+    "deploy": "vercel --prod",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "setup": "npm install && cd frontend && npm install && cd ../backend && pip install -r requirements.txt",
+    "setup:all": "npm run setup && pip install yt-dlp ffmpeg-python moviepy Pillow aiohttp beautifulsoup4"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
