@@ -123,7 +123,9 @@ export default function ProjectDetail() {
     { label: 'Upload', done: !!project.youtube_video_id, action: handleUpload, icon: HiOutlineUpload },
   ];
 
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8000';
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL ||
+    (typeof window !== 'undefined' && window.location.hostname === 'localhost' ? 'http://localhost:8000' :
+     'https://lyriclab-backend.onrender.com');
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">

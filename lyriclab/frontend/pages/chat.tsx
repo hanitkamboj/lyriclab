@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { chatApi } from '../lib/api';
 import { useStore } from '../lib/store';
-import { HiOutlineSend, HiOutlineChat, HiOutlineLightningBolt, HiOutlineCommandLine } from 'react-icons/hi';
+import { HiOutlinePaperAirplane, HiOutlineChat, HiOutlineLightningBolt, HiOutlineTerminal } from 'react-icons/hi';
 import toast from 'react-hot-toast';
 
 export default function ChatPage() {
@@ -110,7 +110,7 @@ export default function ChatPage() {
           <p className="text-slate-400">Control LyricLab with natural language</p>
         </div>
         <div className="flex items-center gap-2 text-xs text-slate-500">
-          <HiOutlineCommandLine size={14} />
+          <HiOutlineTerminal size={14} />
           Type "help" for commands
         </div>
       </div>
@@ -159,7 +159,7 @@ export default function ChatPage() {
           className="input flex-1"
         />
         <button onClick={sendMessage} disabled={loading || !input.trim()} className="btn-primary px-6">
-          <HiOutlineSend size={18} />
+          <HiOutlinePaperAirplane size={18} />
         </button>
       </div>
     </div>
