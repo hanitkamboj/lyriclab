@@ -1,8 +1,11 @@
 /** @type {import('next').NextConfig} */
 const isStaticExport = process.env.EXPORT_MODE === 'static';
+const isPages = process.env.DEPLOY_TARGET === 'github-pages';
+const basePath = isPages ? '/lyriclab' : '';
 
 const nextConfig = {
   reactStrictMode: true,
+  basePath,
   images: {
     unoptimized: isStaticExport,
     domains: ['firebasestorage.googleapis.com', 'lh3.googleusercontent.com', 'i.ytimg.com', 'images.pexels.com'],
@@ -21,6 +24,7 @@ const nextConfig = {
 
 if (isStaticExport) {
   nextConfig.output = 'export';
+  nextConfig.trailingSlash = true;
 } else {
   nextConfig.rewrites = async () => [
     {
