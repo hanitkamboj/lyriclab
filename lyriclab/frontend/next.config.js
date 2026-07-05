@@ -13,7 +13,6 @@ const nextConfig = {
     NEXT_PUBLIC_FIREBASE_APP_ID: '1:822971265775:web:c2bed1b390f7b9cb12e11a',
     NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: 'G-7VPTJCSHST',
     NEXT_PUBLIC_YOUTUBE_API_KEY: 'AIzaSyDbt70OPPr-teRTsPRf6lEsfRo6mOdSj-nU',
-    NEXT_PUBLIC_BACKEND_URL: 'http://localhost:8000',
   },
   async rewrites() {
     return [

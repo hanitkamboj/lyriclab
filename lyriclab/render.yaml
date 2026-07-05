@@ -1,0 +1,80 @@
+# Render Blueprint - One-click deploy
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: lyriclab-backend
+    runtime: docker
+    repo: https://github.com/hanitkamboj/lyriclab
+    branch: main
+    dockerfilePath: ./backend/Dockerfile
+    envVars:
+      - key: LYRICLAB_DATA_DIR
+        value: /data
+      - key: LYRICLAB_DOWNLOADS_DIR
+        value: /downloads
+      - key: LYRICLAB_OUTPUT_DIR
+        value: /output
+      - key: LYRICLAB_DEBUG
+        value: false
+      - key: LYRICLAB_MAX_JOBS
+        value: 2
+      - key: NEXT_PUBLIC_FIREBASE_API_KEY
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_APP_ID
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+        sync: false
+      - key: YOUTUBE_API_KEY
+        sync: false
+      - key: YOUTUBE_CLIENT_ID
+        sync: false
+      - key: YOUTUBE_CLIENT_SECRET
+        sync: false
+      - key: YOUTUBE_PROJECT_ID
+        sync: false
+      - key: PEXELS_API_KEY
+        sync: false
+    disk:
+      name: data
+      mountPath: /data
+      sizeGB: 1
+    plan: free
+
+  - type: web
+    name: lyriclab-frontend
+    runtime: static
+    repo: https://github.com/hanitkamboj/lyriclab
+    branch: main
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/out
+    pullRequestPreviewsEnabled: true
+    envVars:
+      - key: NEXT_PUBLIC_FIREBASE_API_KEY
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_APP_ID
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+        sync: false
+      - key: NEXT_PUBLIC_BACKEND_URL
+        sync: false
+    routes:
+      - type: rewrite
+        source: /api/(.*)
+        destination: https://lyriclab-backend.onrender.com/api/$1

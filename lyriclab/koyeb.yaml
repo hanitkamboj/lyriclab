@@ -1,0 +1,38 @@
+# Koyeb Deployment - https://www.koyeb.com
+# Deploy via: koyeb app init
+
+name: lyriclab
+regions:
+  - was
+
+services:
+  - name: backend
+    type: docker
+    instance_type: free
+    instance_min_count: 1
+    instance_max_count: 1
+    ports:
+      - container_port: 8000
+        protocol: http
+    docker:
+      dockerfile: ./backend/Dockerfile
+    env:
+      - key: LYRICLAB_DEBUG
+        value: "false"
+      - key: LYRICLAB_MAX_JOBS
+        value: "2"
+    routes:
+      - path: /api
+        preserve_path: true
+
+  - name: frontend
+    type: buildpack
+    instance_type: free
+    build_command: cd frontend && npm install && npm run build
+    run_command: cd frontend && npm start
+    ports:
+      - container_port: 3000
+        protocol: http
+    routes:
+      - path: /
+        preserve_path: true
